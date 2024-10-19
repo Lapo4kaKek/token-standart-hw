@@ -1,18 +1,18 @@
 import { HardhatUserConfig } from "hardhat/config";
 import "@nomicfoundation/hardhat-toolbox";
-import * as dotenv from "dotenv";
+import dotenv from "dotenv";
 
 dotenv.config();
 
 const SEPOLIA_RPC_URL = process.env.SEPOLIA_URL || "";
 
-const alchemy_key = process.env.ALCHEMY_TOKEN || "";
+const ALCHEMY_TOKEN = process.env.ALCHEMY_TOKEN || "";
 
-const URL = `${SEPOLIA_RPC_URL}${alchemy_key}`;
+const URL = `${SEPOLIA_RPC_URL}${ALCHEMY_TOKEN}`;
 
 const privateKey = process.env.PRIVATE_KEY || "";
 
-console.log(`URL: ${URL}}`)
+console.log(`URL: ${URL}`)
 
 const config: HardhatUserConfig = {
   solidity: "0.8.20",

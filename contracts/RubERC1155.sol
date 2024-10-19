@@ -10,8 +10,7 @@ contract Rub is ERC1155, Ownable {
     uint256 public constant TOKEN_ID = 0;
 
     constructor(
-        address initialOwner
-    ) ERC1155("https://i-am-music.ru/static/images/1.png") Ownable(initialOwner) {}
+    ) ERC1155("https://i-am-music.ru/static/images/1.png") Ownable(msg.sender) {}
 
     /**
      * @notice Allows a user to buy tokens by sending ETH.
