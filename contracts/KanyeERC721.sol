@@ -36,7 +36,7 @@ contract Kanye is ERC721, ERC721URIStorage, Ownable {
         require(to != address(0), "Cannot mint to the zero address"); 
         require(tokenId > 0, "Token ID must be greater than 0"); 
         _safeMint(to, tokenId);
-        _setTokenURI(tokenId, "https://i-am-music.ru/static/images/1.pngT");
+        _setTokenURI(tokenId, "https://i-am-music.ru/static/images/1.png");
     }
 
     /**
@@ -54,7 +54,6 @@ contract Kanye is ERC721, ERC721URIStorage, Ownable {
     function _baseURI() internal view override returns (string memory) {
         return baseURI;
     }
-
 
     /**
      * @notice Returns the URI (Uniform Resource Identifier) for a given token ID.
