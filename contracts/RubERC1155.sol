@@ -7,10 +7,21 @@ import "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155URIStorage.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract Rub is ERC1155, Ownable {
+    string private baseURI;
     uint256 public constant TOKEN_ID = 0;
-
     constructor(
-    ) ERC1155("https://i-am-music.ru/static/images/1.png") Ownable(msg.sender) {}
+    ) ERC1155("https://i-am-music.ru/static/images/1.png") Ownable(msg.sender) {
+        baseURI="https://i-am-music.ru/static/images/1.png";
+    }
+
+    /**
+     * @notice Allows the owner to update the base URI for token metadata.
+     * @param newURI The new base URI.
+     */
+    function setURI(string memory newURI) public onlyOwner {
+        baseURI = newURI;
+        _setURI(newURI);
+    }
 
     /**
      * @notice Allows a user to buy tokens by sending ETH.
@@ -39,5 +50,14 @@ contract Rub is ERC1155, Ownable {
     ) public onlyOwner {
         require(amount > 0, "Amount must be greater than 0");
         _mint(account, id, amount, data);
+    }
+
+
+    /**
+     * @notice Returns the base URI.
+     * @return The base URI for token metadata.
+     */
+    function _baseURI() internal view returns (string memory) {
+        return baseURI;
     }
 }

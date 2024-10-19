@@ -1,6 +1,12 @@
 import { HardhatUserConfig } from "hardhat/config";
 import "@nomicfoundation/hardhat-toolbox";
+import "@openzeppelin/hardhat-upgrades";
+import "@nomicfoundation/hardhat-ethers";
+import "@nomicfoundation/hardhat-chai-matchers";
+
 import dotenv from "dotenv";
+
+import { vars } from "hardhat/config";
 
 dotenv.config();
 
@@ -17,6 +23,7 @@ console.log(`URL: ${URL}`)
 const config: HardhatUserConfig = {
   solidity: "0.8.20",
   networks: {
+    hardhat: {},
     sepolia: {
       url: URL,
       accounts: [privateKey],

@@ -137,7 +137,7 @@ describe("Carti Token", function () {
         //const value = 1n;
         const value = ethers.parseEther("0.0001");
         const deadline = Math.floor(Date.now() / 1000) + 3600;
-        console.log(owner.address)
+
         await carti.connect(owner).buy({
             value,
         });
