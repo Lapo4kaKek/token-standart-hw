@@ -36,3 +36,18 @@ npx hardhat test
 ### Example result:
 
 ![](/static/tests_result.png)
+
+
+Script for verification:
+```
+npx hardhat verify --network sepolia <contract address>
+```
+
+
+
+Get events script:
+```
+npx hardhat run scripts/queryEvents.ts --network sepolia
+```
+
+![](/static/events.png)
