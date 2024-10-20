@@ -3,6 +3,7 @@ import "@nomicfoundation/hardhat-toolbox";
 import "@openzeppelin/hardhat-upgrades";
 import "@nomicfoundation/hardhat-ethers";
 import "@nomicfoundation/hardhat-chai-matchers";
+import "@nomicfoundation/hardhat-verify";
 
 import dotenv from "dotenv";
 
@@ -18,7 +19,7 @@ const URL = `${SEPOLIA_RPC_URL}${ALCHEMY_TOKEN}`;
 
 const privateKey = process.env.PRIVATE_KEY || "";
 
-console.log(`URL: ${URL}`)
+const etherscanApiKey = process.env.ETHERSCAN_API_KEY || "";
 
 const config: HardhatUserConfig = {
   solidity: "0.8.20",
@@ -27,6 +28,11 @@ const config: HardhatUserConfig = {
     sepolia: {
       url: URL,
       accounts: [privateKey],
+    },
+  },
+  etherscan: {
+    apiKey: {
+      sepolia: etherscanApiKey,
     }
   }
 };

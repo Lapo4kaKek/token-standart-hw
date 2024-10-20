@@ -10,8 +10,8 @@ contract Rub is ERC1155, Ownable {
     string private baseURI;
     uint256 public constant TOKEN_ID = 0;
     constructor(
-    ) ERC1155("https://i-am-music.ru/static/images/1.png") Ownable(msg.sender) {
-        baseURI="https://i-am-music.ru/static/images/1.png";
+    ) ERC1155("https://rub/static/images/1.png") Ownable(msg.sender) {
+        baseURI="https://rub/static/images/1.png";
     }
 
     /**

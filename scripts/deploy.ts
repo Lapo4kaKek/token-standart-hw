@@ -11,29 +11,60 @@ const URL = `${SEPOLIA_RPC_URL}${alchemy_key}`;
 
 const privateKey = process.env.PRIVATE_KEY || "";
 
-async function main() {
-    // Deploy ERC20 contract (Carti.sol)
+async function deployERC20() {
     const CartiFactory = await ethers.getContractFactory("Carti");
     const cartiContract = await CartiFactory.deploy();
     await cartiContract.deploymentTransaction();
     const cartiAddress = await cartiContract.getAddress();
-    console.log(`Carti deployed to: ${cartiAddress}`);
+    console.log(`Carti (ERC20) deployed to: ${cartiAddress}`);
   
-    // // Deploy ERC721 contract (Kanye.sol)
-    // const KanyeFactory = await ethers.getContractFactory("Kanye");
-    // const kanyeContract = await KanyeFactory.deploy();
-    // await kanyeContract.deploymentTransaction();
-    // const kanyeAddress = await cartiContract.getAddress();
-    // console.log(`Kanye deployed to: ${kanyeAddress}`);
+    const carti = await ethers.getContractAt("Carti", cartiAddress);
+    const [owner] = await ethers.getSigners();
   
-    // Deploy ERC1155 contract (Rub.sol)
+    const mintTx = await carti.mint(owner.address, ethers.parseUnits("1000", 18));
+    await mintTx.wait();
+    console.log(`Minted 1000 Carti tokens to ${owner.address}`);
+}
+
+
+async function deployERC721() {
+    const KanyeFactory = await ethers.getContractFactory("KanyeTokenERC721");
+    const kanyeContract = await KanyeFactory.deploy();
+    await kanyeContract.deploymentTransaction();
+    const kanyeAddress = await kanyeContract.getAddress();
+    console.log(`KanyeTokenERC721 (ERC721) deployed to: ${kanyeAddress}`);
+
+    const kanye = await ethers.getContractAt("KanyeTokenERC721", kanyeAddress);
+    const [owner] = await ethers.getSigners();
+
+    const mintTx = await kanye.buyToken("https://example.com/metadata.json", {
+        value: ethers.parseEther("0.01"),
+    });
+    await mintTx.wait();
+    console.log(`Minted 1 Kanye NFT to ${owner.address}`);
+}
+async function deployERC1155() {
     const RubFactory = await ethers.getContractFactory("Rub");
     const rubContract = await RubFactory.deploy();
     await rubContract.deploymentTransaction();
-    const rubAddress = await cartiContract.getAddress();
-    console.log(`Rub deployed to: ${rubAddress}`);
+    const rubAddress = await rubContract.getAddress();
+    console.log(`Rub (ERC1155) deployed to: ${rubAddress}`);
+
+    const rub = await ethers.getContractAt("Rub", rubAddress);
+    const [owner] = await ethers.getSigners();
+
+    const mintTx = await rub.mint(owner.address, 0, 1000, "0x");
+    await mintTx.wait();
+    console.log(`Minted 1000 Rub tokens of ID 0 to ${owner.address}`);
 }
-  
+
+// Main function to deploy and mint all contracts
+async function main() {
+    await deployERC20();
+    await deployERC721();
+    await deployERC1155();
+}
+
 main().catch((error) => {
     console.error(error);
     process.exitCode = 1;
